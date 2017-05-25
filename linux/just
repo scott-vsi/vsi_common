@@ -7,12 +7,11 @@
 #   Andy Neff
 # PURPOSE
 #   When working on a project, it often becomes necessary to run many long 
-#   commands. Just like make, just gives you an easy way to create a set of 
-#   targets to execute easily. Unlike a makefile, it has two key distinctions
+#   commands. Just like make, just gives an easy way to create a set of targets
+#   to execute easily. Unlike a makefile, it has two key distinctions
 #     * It's not a makefile. Bash is easier than make for simple tasks
 #     * It works on Windows (when git->bash is installed),  MacOS (bash 3.2)
-#       and Linux.
-#   To set up 
+#       and Linux with no additional dependencies.
 # DESCRIPTION
 #   just supports a number of features:
 #   * Tab completion (.just)
@@ -107,7 +106,7 @@
 #   The foo_a and foo_b are added to tab complete and help, but using more than
 #   one # ignores it all together. So foo_c is ignored
 # NOTES
-#   The help message can only be one line long, but can be as long as you need
+#   The help message can only be one line long, but can be as long as needed
 #
 #   The same mechanism populates help and tab completion
 #***
@@ -121,8 +120,8 @@ trap 'print_error "${BASH_SOURCE[0]}" "${LINENO}"' ERR
 # NAME
 #   JUST_IN_SCRIPT - Unexported variable to indicated sources by just
 # DESCRIPTION
-#   Useful in other scripts for determining if you are being sourced by
-#   just or not.
+#   Useful in other scripts for determining if they are being sourced by just or
+#   not.
 # USAGE
 #   Currently one use of this is dual purposing a file, so that it behaves 
 #   differently when sourced by just or by a user on the prompts
