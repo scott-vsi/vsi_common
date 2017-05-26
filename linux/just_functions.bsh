@@ -680,23 +680,27 @@ function get_args() #Function used to consume a collection of arguments and stor
   : ${extra_args=0}
   args_used=${pre_args_used-0}
   if (( $# >= 1 )); then
-    if [ "$1" == "${JUST_SEPARATOR}" ]; then
+#    if [ "$1" == "${JUST_SEPARATOR}" ]; then
       #skip --
-      shift 1
+#      shift 1
       #look to see if there is another --
       next_break=$(findin "${JUST_SEPARATOR}" ${@+"${@}"}) # + 1
+echo $@
+set -xv
       if [ "${next_break}" == -1 ]; then
-        args_used=$((${args_used}+$#+1))
-        extra_args+=$#+1
+        args_used=$((${args_used}+$#))
+        extra_args+=$#
         args=("${@:1}")
       else
-        args_used=$((${args_used}+${next_break}+2))
+        args_used=$((${args_used}+${next_break}+1))
         args=("${@:1:$(($next_break))}")
-        extra_args+=${next_break}+2
+        extra_args+=${next_break}+1
       fi
-    else
-      args=()
-    fi
+set +xv
+echo $extra_args
+#    else
+#      args=()
+#    fi
   fi
 }
 
@@ -712,15 +716,15 @@ function get_additional_args()
   local pre_args_used
 
   if [ "${args_used}" -gt "0" ]; then
-    pre_args_used=$((${args_used}-1))
+    pre_args_used=$((${args_used}))
     shift ${pre_args_used} # Go back one arg wrt last args call
-    extra_args+=-1         # to get the beginning --
-    if [ "$1" == "${JUST_SEPARATOR}" ]; then # It should start with --. Use get_args as normal
+#    extra_args+=-1         # to get the beginning --
+#    if [ "$1" == "${JUST_SEPARATOR}" ]; then # It should start with --. Use get_args as normal
       get_args "${@}"
-    else # Else there is no --, and basically abort get_additional_args. 
-      extra_args+=1
-      args=()
-    fi
+#    else # Else there is no --, and basically abort get_additional_args. 
+#      extra_args+=1
+#      args=()
+#    fi
   fi
 }
 
